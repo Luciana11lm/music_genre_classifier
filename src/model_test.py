@@ -1,8 +1,11 @@
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
 import seaborn as sns
+import joblib
 import matplotlib.pyplot as plt
 
-def evaluate_model(model, X_test, y_test):
+def evaluate_model(X_test, y_test, model_path="best_random_forest_model.pkl"):
+  model = joblib.load(model_path)
+  print("Modelul a fost incarcat")
   y_pred = model.predict(X_test)
 
   accuracy = accuracy_score(y_test, y_pred)
@@ -18,7 +21,7 @@ def evaluate_model(model, X_test, y_test):
   print("\n Classification Report:\n")
   print(classification_report(y_test, y_pred))
 
-  # confusion Matrix
+  # confusion matrix
   cm = confusion_matrix(y_test, y_pred)
   plt.figure(figsize=(10, 6))
   sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=model.classes_, yticklabels=model.classes_)
@@ -26,4 +29,5 @@ def evaluate_model(model, X_test, y_test):
   plt.ylabel('Etichete reale')
   plt.title('Confusion Matrix')
   plt.tight_layout()
+  plt.savefig('genres/confusion_matrix.png')
   plt.show()

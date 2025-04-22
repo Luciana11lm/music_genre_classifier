@@ -4,11 +4,14 @@ from src.model_train import train_best_model
 from src.model_test import evaluate_model
 
 if __name__ == "__main__":
-  print("PASUL 1 - Analiza exploratorie -")
+  print("\nPASUL 1 - Analiza exploratorie -")
   run_full_analysis()
-  print("PASUL 2 - Preprocesarea datelor si impartirea in seturi de antrenamet/ test -")
+  print("\nPASUL 2 - Preprocesarea datelor si impartirea in seturi de antrenamet/ test -")
   X_train_scaled, X_test_scaled, y_train, y_test = load_and_split_data(output_csv='genres/features.csv')
-  print("PASUL 3 - Antrenarea si salvarea modelului -")
-  model = train_best_model(X_train_scaled, X_test_scaled, y_train, y_test)
-  print("PASUL 4 - Testarea modelului si evaluarea performantelor -")
-  evaluate_model(model, X_test_scaled, y_test)
+  step = input("Se continua cu antrenarea modelului (0) sau se foloseste un model deja antrenat (1)?\n")
+  if step == 0:
+    print("\nPASUL 3 - Antrenarea si salvarea modelului -")
+    model = train_best_model(X_train_scaled, X_test_scaled, y_train, y_test)
+  else:
+    print("\nPASUL 4 - Testarea modelului si evaluarea performantelor -")
+    evaluate_model(X_test_scaled, y_test, model_path='models/model_genre_classifier_random_forest.joblib')   # pentru testare fara antrenare, pe un model deja antrenat

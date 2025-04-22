@@ -9,7 +9,7 @@ from sklearn.model_selection import GridSearchCV
 # -----------------------------------------------------------------
 # Antrenarea mai multor modele KNN pentru a-l alege pe cel mai bun
 # -----------------------------------------------------------------
-def train_knn(X_train, X_test, y_train, y_test, k_values=[3, 5, 7, 9]):
+def train_knn(X_train, X_test, y_train, y_test, k_values=[1, 2, 3, 5, 7, 9]):
   best_k = None             # initializare valori definitorii pentru a stabili cel mai bun model
   best_accuracy = 0
   best_model = None
@@ -34,21 +34,22 @@ def train_knn(X_train, X_test, y_train, y_test, k_values=[3, 5, 7, 9]):
 # Antrenarea modelului Random Forest
 # -----------------------------------
 def train_random_forest(X_train, X_test, y_train, y_test):
-  param_grid = {
-    'n_estimators': [500, 200, 300],
-    'max_depth': [5, 10, 20, None],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4],
-    'max_features': ['sqrt', 'log2']
-  }
+  param_grid = {                               # definirea unui dictionar cu diverse valori pentru parametrii modelului
+    'n_estimators': [500],
+    'max_depth': [10, 15, 20, 25, None],
+    'min_samples_split': [2, 5, 10, 20],
+    'min_samples_leaf': [1, 2, 4, 10],
+    'max_features': ['sqrt', 'log2', None],
+    'bootstrap': [True, False]
+  } 
   model = RandomForestClassifier(random_state=42) # instanta de model Random Forest
-  grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=3, verbose=2, n_jobs=-1)
-  grid_search.fit(X_train, y_train)
-  print(f"Cel mai bun set de parametri: {grid_search.best_params_}")
-  print(f"Acuratețea modelului optimizat: {grid_search.best_score_}")
-  best_model = grid_search.best_estimator_
+  grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=3, verbose=2, n_jobs=-1) # cautarea celor mai bune combinatii 
+  grid_search.fit(X_train, y_train) # antrenarea cu fiecare combinatie pentru a obtine cel mai bun set de parametrii 
+  print(f"Cel mai bun set de parametri: {grid_search.best_params_}")    # afisarea celor mai buni parametrii gasiti
+  print(f"Acuratețea modelului optimizat: {grid_search.best_score_}")   # afisarea acuratetii maxime gasite
+  best_model = grid_search.best_estimator_                              # salvarea modelului cu cea mai buna acuratete
 
-  y_pred = best_model.predict(X_test)
+  y_pred = best_model.predict(X_test)                                   # predictia cu modelul cu acuratetea cea mai mare
   accuracy = accuracy_score(y_test, y_pred)
   print(f"Acuratețea pe setul de test: {accuracy:.4f}")
   #model.fit(X_train, y_train)     # antrenare model

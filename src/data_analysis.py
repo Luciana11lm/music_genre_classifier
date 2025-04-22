@@ -108,5 +108,5 @@ def run_full_analysis():
   print("[2] Compararea caracteristicilor audio intre genuri")
   plot_feature_comparison_across_genres()
 
-  print("[3] Analiza unui fisier de exemplu")
+  print("[3] Analiza unui fisier")
   analyze_example_file()
