@@ -24,18 +24,22 @@ def get_genre_distribution(data_path=GENRE_DIR):
   return genre_counts
 
 def extract_audio_features(file_path):
-  y, sr = librosa.load(file_path, duration=30) # extragerea vectorului de amplitudini pe intervale de timp discrete si rata de exantionare
-  features = {}
+  try: 
+    y, sr = librosa.load(file_path, duration=30) # extragerea vectorului de amplitudini pe intervale de timp discrete si rata de exantionare
+    features = {}                                # initializam un dictionar in care vom pune caracteristicile extrase
 
-  features['zcr'] = np.mean(librosa.feature.zero_crossing_rate(y))
-  features['chroma_stft'] = np.mean(librosa.feature.chroma_stft(y=y, sr=sr))
-  features['mfcc'] = np.mean(librosa.feature.mfcc(y=y, sr=sr).T, axis=0)  # MFCCs (13 coeficienti default)
-  features['spectral_contrast'] = np.mean(librosa.feature.spectral_contrast(y=y, sr=sr))
-  features['tonnetz'] = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(y), sr=sr))
-  tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
-  features['tempo'] = tempo
+    features['zcr'] = np.mean(librosa.feature.zero_crossing_rate(y))                         # rata de zero-crossing (cat de des semnalul audio trece prin axa 0)
+    features['chroma_stft'] = np.mean(librosa.feature.chroma_stft(y=y, sr=sr))               # chroma STFT - descrie cat de "armonios" este semnalul
+    features['mfcc'] = np.mean(librosa.feature.mfcc(y=y, sr=sr).T, axis=0)                   # MFCCs (13 coeficienti default)
+    features['spectral_contrast'] = np.mean(librosa.feature.spectral_contrast(y=y, sr=sr))   # spectral contrast - diferentele intre frecvente
+    features['tonnetz'] = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(y), sr=sr)) # tonnetz - caracteristici armonice, legate de ton si acorduri
+    tempo, _ = librosa.beat.beat_track(y=y, sr=sr)                                               # tempo - estimarea vitezei ritmice a piesei
+    features['tempo'] = tempo
     
-  return features
+    return features
+  except Exception as e:
+    print(f"Eroare la procesarea fisierului {file_path}: {e}")
+    return None
 
 def plot_feature_comparison_across_genres(data_path=GENRE_DIR):
   feature_names = ['zcr', 'chroma_stft', 'mfcc', 'spectral_contrast', 'tonnetz', 'tempo']

@@ -7,36 +7,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 # -----------------------------------------------------
-# FUNCȚIA 1: Încărcarea și împărțirea datelor în train/test
-# -----------------------------------------------------
-def load_and_split_data(test_size=0.2, random_state=42):
-    """
-    Încarcă datele din features.csv și le împarte în seturi de antrenare și testare.
-    
-    :param test_size: proporția din date care va fi alocată setului de testare
-    :param random_state: valoare fixă pentru reproducibilitate
-    :return: tuple cu X_train, X_test, y_train, y_test (datele procesate)
-    """
-    # Încarcă datele extrase anterior în fișierul CSV
-    df = pd.read_csv("genres/features.csv")
-
-    # Separă coloana de label-uri (gen muzical) de restul caracteristicilor
-    X = df.drop(columns=["label"])  # Caracteristicile audio
-    y = df["label"]                 # Etichetele (genurile muzicale)
-
-    # Normalizează caracteristicile pentru a avea valori comparabile
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-
-    # Împarte datele în set de antrenament și testare
-    X_train, X_test, y_train, y_test = train_test_split(
-        X_scaled, y, test_size=test_size, random_state=random_state, stratify=y
-    )
-
-    return X_train, X_test, y_train, y_test
-
-
-# -----------------------------------------------------
 # FUNCȚIA 2: Antrenarea mai multor modele KNN pentru a alege cel mai bun
 # -----------------------------------------------------
 def train_knn(X_train, X_test, y_train, y_test, k_values=[3, 5, 7, 9]):
