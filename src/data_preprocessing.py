@@ -3,6 +3,8 @@ import librosa
 import numpy as np
 import pandas as pd
 from tqdm import tqdm  # pentru bara de progres 
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from src.data_analysis import extract_audio_features
 
 GENRE_DIR = 'genres/'
@@ -24,6 +26,9 @@ def preprocess_dataset(output_csv='genres/features.csv'):
           file_path = os.path.join(genre_folder, filename)
           try:
             features = extract_audio_features(file_path)        # se extrag caracteristicile folosind functia din data_analysis.py
+            for i in range(len(features['mfcc'])):
+              features[f'mfcc_{i+1}'] = features['mfcc'][i]
+            features.pop('mfcc', None)
             if features:
               features['label'] = genre                         # adaugam eticheta la fiecare set de caracteristici
               data.append(features)

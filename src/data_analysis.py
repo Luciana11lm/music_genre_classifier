@@ -34,7 +34,7 @@ def extract_audio_features(file_path):
     features['spectral_contrast'] = np.mean(librosa.feature.spectral_contrast(y=y, sr=sr))   # spectral contrast - diferentele intre frecvente
     features['tonnetz'] = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(y), sr=sr)) # tonnetz - caracteristici armonice, legate de ton si acorduri
     tempo, _ = librosa.beat.beat_track(y=y, sr=sr)                                               # tempo - estimarea vitezei ritmice a piesei
-    features['tempo'] = tempo
+    features['tempo'] = float(tempo)
     
     return features
   except Exception as e:
