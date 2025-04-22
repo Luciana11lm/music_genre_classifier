@@ -54,11 +54,3 @@ Acest proiect utilizează tehnici de învățare automată pentru a clasifica fi
 
 ---
 
-## Instalare
-
-### 1. Clonarea Repozitoriului
-
-Clonează acest proiect pe mașina ta locală:
-
-```bash
-git clone https://github.com/Luciana11lm/music_genre_classifier.git
