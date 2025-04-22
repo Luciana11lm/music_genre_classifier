@@ -1,7 +1,7 @@
 # music_genre_classifier
 music_genre_classifier/
 │
-├── data/
+├--genres/
 │   └── gtzan_genre_dataset.csv  # sau fișiere audio + CSV cu etichete
 │
 ├── src/
