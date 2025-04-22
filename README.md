@@ -52,5 +52,6 @@ Acest proiect utilizează tehnici de învățare automată pentru a clasifica fi
 ### `model_test.py`
 - **Testarea modelului**: Calculează și afişează precizia, recall, F1-score și matricea de confuzie pentru modelele antrenate. Afișează cel mai bun set de parametri pentru modelul Random Forest.
 
+Dataset: https://www.kaggle.com/datasets/carlthome/gtzan-genre-collection/data
 ---
 
