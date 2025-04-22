@@ -1,14 +1,18 @@
 # music_genre_classifier
-music_genre_classifier/
-│
-├── data/
-│   └── gtzan_genre_dataset.csv  # sau fișiere audio + CSV cu etichete
-│
-├── src/
-│   ├── data_analysis.py         # Analiza exploratorie
-│   ├── data_preprocessing.py    # Curățare / Preprocesare
-│   ├── model_train.py           # Antrenare model + tuning
-│   └── model_test.py            # Testare / evaluare
-│
-└── main.py                      # Scriptul principal care le leagă pe toate
-
+.
+├── README.md
+├── genres/                   # Folderul cu fișierele audio, imaginile și CSV-urile
+│   ├── [blues, classical, ...]  # Subfoldere cu fișiere .au
+│   ├── features.csv             # Date extrase pentru antrenare
+│   ├── train.csv / test.csv     # Seturi de train și test
+│   ├── comparatie_genuri.png   # Grafice de analiză
+│   ├── confusion_matrix.png
+├── models/                  # Modelele antrenate (joblib)
+│   ├── model_genre_classifier_knn.joblib
+│   └── model_genre_classifier_random_forest.joblib
+├── main.py                  # Script principal de rulare
+├── src/                     # Cod sursă organizat pe module
+│   ├── data_analysis.py         # Vizualizări și analize pe date
+│   ├── data_preprocessing.py    # Curățare, split, procesare
+│   ├── model_train.py           # Antrenarea modelelor
+│   └── model_test.py            # Testare și evaluare modele
