@@ -67,8 +67,8 @@ def train_best_model(X_train, X_test, y_train, y_test ):
   knn_model = train_knn(X_train, X_test, y_train, y_test)             # antrenare model knn
   rf_model = train_random_forest(X_train, X_test, y_train, y_test)    # antrenare model random forest
 
-  model_choice = input("Introduceti modelul ales (1 - KNN, 2 - Random Forest): ")
+  model_choice = float(input("Introduceti modelul ales (1 - KNN, 2 - Random Forest): "))
   if model_choice == 1: 
-    return knn_model
+    return knn_model, 'models/model_genre_classifier_knn.joblib'
   else:
-    return rf_model  
+    return rf_model, 'models/model_genre_classifier_random_forest.joblib'

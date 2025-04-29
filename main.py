@@ -8,10 +8,12 @@ if __name__ == "__main__":
   run_full_analysis()
   print("\nPASUL 2 - Preprocesarea datelor si impartirea in seturi de antrenamet/ test -")
   X_train_scaled, X_test_scaled, y_train, y_test = load_and_split_data(output_csv='genres/features.csv')
-  step = input("Se continua cu antrenarea modelului (0) sau se foloseste un model deja antrenat (1)?\n")
+  step = float(input("Se continua cu antrenarea modelului (0) sau se foloseste un model deja antrenat (1)?\n"))
   if step == 0:
     print("\nPASUL 3 - Antrenarea si salvarea modelului -")
-    model = train_best_model(X_train_scaled, X_test_scaled, y_train, y_test)
+    model, model_path = train_best_model(X_train_scaled, X_test_scaled, y_train, y_test)
+    print("\nPASUL 4 - Testarea modelului si evaluarea performantelor -")
+    evaluate_model(X_test_scaled, y_test, model_path=model_path)
   else:
     print("\nPASUL 4 - Testarea modelului si evaluarea performantelor -")
     evaluate_model(X_test_scaled, y_test, model_path='models/model_genre_classifier_random_forest.joblib')   # pentru testare fara antrenare, pe un model deja antrenat
