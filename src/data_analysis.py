@@ -25,11 +25,11 @@ def get_genre_distribution(data_path=GENRE_DIR):
 
 def extract_audio_features(file_path):
   try: 
-    y, sr = librosa.load(file_path, duration=30) # extragerea vectorului de amplitudini pe intervale de timp discrete si rata de exantionare
+    y, sr = librosa.load(file_path, duration=30) # extragerea vectorului de amplitudini pe intervale de timp discrete si rata de esantionare
     features = {}                                # initializam un dictionar in care vom pune caracteristicile extrase
 
     features['zcr'] = np.mean(librosa.feature.zero_crossing_rate(y))                         # rata de zero-crossing (cat de des semnalul audio trece prin axa 0)
-    features['chroma_stft'] = np.mean(librosa.feature.chroma_stft(y=y, sr=sr))               # chroma STFT - descrie cat de "armonios" este semnalul
+    features['chroma_stft'] = np.mean(librosa.feature.chroma_stft(y=y, sr=sr))               # chroma STFT - descrie cat de armonios este semnalul
     features['mfcc'] = np.mean(librosa.feature.mfcc(y=y, sr=sr).T, axis=0)                   # MFCCs (13 coeficienti default)
     features['spectral_contrast'] = np.mean(librosa.feature.spectral_contrast(y=y, sr=sr))   # spectral contrast - diferentele intre frecvente
     features['tonnetz'] = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(y), sr=sr)) # tonnetz - caracteristici armonice, legate de ton si acorduri
@@ -58,7 +58,7 @@ def plot_feature_comparison_across_genres(data_path=GENRE_DIR):
           genre_features[genre] = features
           break                                         # iesim dupa primul fisier
                   
-  # afisarem caracteristici
+  # afisare caracteristici
   plt.figure(figsize=(12, 6))
   for i, feature in enumerate(feature_names):
     plt.subplot(2, 3, i+1)
